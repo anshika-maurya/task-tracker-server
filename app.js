@@ -11,10 +11,22 @@ const cors = require('cors');
 app.use(cookieParser());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://task-tracker-theta-steel.vercel.app',
+];
+
 app.use(cors({
-  origin: process.env.REACT_APP_API_URL  || 'http://localhost:3000',
-  credentials: true
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
 }));
+
 
 // Increase header size limit to fix 431 errors
 app.use((req, res, next) => {
