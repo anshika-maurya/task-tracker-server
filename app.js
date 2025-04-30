@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/task-tracker', {
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost:27017/task-tracker', {
   useNewUrlParser: true, 
   useUnifiedTopology: true
 })
